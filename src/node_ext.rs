@@ -150,7 +150,7 @@ pub trait NodeExt: Sized {
         let node = self.get_node();
         let mut result = vec![];
         extract_text(node, &mut result);
-        result.join("")
+        result.join(" ")
     }
 
     /// Returns the node as an html tag
