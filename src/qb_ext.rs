@@ -96,7 +96,7 @@ pub trait QueryBuilderExt {
     /// # extern crate soup;
     /// use soup::prelude::*;
     ///
-    /// # fn main() -> Result<(), Box<std::error::Error>> {
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let soup = Soup::new(r#"<ul><li>ONE</li><li>TWO</li><li>THREE</li></ul>"#);
     /// let ul = soup.tag("ul").find().expect("couldn't find 'ul'");
     /// let li_text = ul.children()
@@ -120,7 +120,7 @@ pub trait QueryBuilderExt {
     /// # extern crate soup;
     /// use soup::prelude::*;
     ///
-    /// # fn main() -> Result<(), Box<std::error::Error>> {
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let soup = Soup::new(r#"<div><p><b>FOO</b></p></div>"#);
     /// let b = soup.tag("b").find().expect("Couldn't find tag 'b'");
     /// let parents = b.parents().map(|node| node.name().to_string()).collect::<Vec<_>>();

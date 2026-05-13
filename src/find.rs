@@ -160,7 +160,7 @@ where
 /// # extern crate soup;
 /// # use soup::prelude::*;
 /// # use std::error::Error;
-/// # fn main() -> Result<(), Box<Error>> {
+/// # fn main() -> Result<(), Box<dyn Error>> {
 /// let soup = Soup::new(r#"<div id="foo">BAR</div><div id="baz">QUUX</div>"#);
 /// let query = soup.tag("div")         // result must be a div
 ///                 .attr("id", "foo")  // with id "foo"
@@ -207,7 +207,7 @@ where
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup = Soup::new(r#"<div id="one"></div><div id="two"></div><div id="three></div>"#);
     /// let results = soup.tag("div").limit(2).find_all().collect::<Vec<_>>();
     /// assert_eq!(results.len(), 2);
@@ -237,7 +237,7 @@ where
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup =
     ///     Soup::new(r#"<div>Test</div><section><b id="bold-tag">SOME BOLD TEXT</b></section>"#);
     /// let result = soup.tag("b").find().expect("Couldn't find tag 'b'");
@@ -257,7 +257,7 @@ where
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup = Soup::new(r#"<div>Test</div><section><b id="bold-tag">SOME BOLD TEXT</b></section>"#);
     /// let result = soup.attr_name("id").find().expect("Couldn't find element with an 'id'");
     /// assert_eq!(result.name(), "b");
@@ -282,7 +282,7 @@ where
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup = Soup::new(r#"<div>Test</div><section><b id="bold-tag">SOME BOLD TEXT</b></section>"#);
     /// let result = soup.attr_value("bold-tag").find().expect("Couldn't find a tag with attribute value 'bold-tag'");
     /// assert_eq!(result.name(), "b");
@@ -307,7 +307,7 @@ where
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup =
     ///     Soup::new(r#"<div>Test</div><section><b id="bold-tag">SOME BOLD TEXT</b></section>"#);
     /// let result = soup.attr("id", "bold-tag").find().expect("Couldn't find tag with id 'bold-tag'");
@@ -335,7 +335,7 @@ where
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup = Soup::new(
     ///     r#"<div>Test</div><section class="content"><b id="bold-tag">SOME BOLD TEXT</b></section>"#,
     /// );
@@ -366,7 +366,7 @@ where
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup = Soup::new(
     ///     r#"<ul><li id="one">One</li><li id="two">Two</li><li id="three">Three</li></ul>"#,
     /// );
@@ -388,7 +388,7 @@ where
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup = Soup::new(
     ///     r#"<ul><li id="one">One</li><li id="two">Two</li><li id="three">Three</li></ul>"#,
     /// );

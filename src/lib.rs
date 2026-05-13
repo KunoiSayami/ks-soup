@@ -184,7 +184,7 @@
 //! # use soup::prelude::*;
 //! # use std::error::Error;
 //! use regex::Regex;
-//! # fn main() -> Result<(), Box<Error>> {
+//! # fn main() -> Result<(), Box<dyn Error>> {
 //!
 //! let soup = Soup::new(r#"<body><p>some text, <b>Some bold text</b></p></body>"#);
 //! let results = soup.tag(Regex::new("^b")?)
@@ -202,7 +202,7 @@
 //! # extern crate soup;
 //! # use soup::prelude::*;
 //! # use std::error::Error;
-//! # fn main() -> Result<(), Box<Error>> {
+//! # fn main() -> Result<(), Box<dyn Error>> {
 //!
 //! let soup = Soup::new(r#"<body><p>some text, <b>Some bold text</b></p></body>"#);
 //! let results = soup.tag(true)
@@ -229,7 +229,7 @@
 //! # extern crate soup;
 //! # use soup::prelude::*;
 //! # use std::error::Error;
-//! # fn main() -> Result<(), Box<Error>> {
+//! # fn main() -> Result<(), Box<dyn Error>> {
 //!
 //! let soup = Soup::new(r#"<body><p>some text, <b>Some bold text</b></p></body>"#);
 //! let b = soup.tag("b")
@@ -251,7 +251,7 @@
 //! # extern crate soup;
 //! # use soup::prelude::*;
 //! # use std::error::Error;
-//! # fn main() -> Result<(), Box<Error>> {
+//! # fn main() -> Result<(), Box<dyn Error>> {
 //!
 //! let soup = Soup::new(r#"<body><ul><li>ONE</li><li>TWO</li><li>THREE</li></ul></body>"#);
 //! let ul = soup.tag("ul")
@@ -272,7 +272,7 @@
 //! # extern crate soup;
 //! # use soup::prelude::*;
 //! # use std::error::Error;
-//! # fn main() -> Result<(), Box<Error>> {
+//! # fn main() -> Result<(), Box<dyn Error>> {
 //!
 //! let soup = Soup::new(r#"<body><ul><li>ONE</li><li>TWO</li><li>THREE</li></ul></body>"#);
 //! let li = soup.tag("li").find().expect("Couldn't find tag 'li'");
@@ -334,7 +334,7 @@ impl Soup {
     /// # extern crate soup;
     /// # use soup::prelude::*;
     /// # use std::error::Error;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let html = r#"
     /// <!doctype html>
     /// <html>
@@ -370,7 +370,7 @@ impl Soup {
     /// # use std::error::Error;
     /// use soup::prelude::*;
     ///
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let response = reqwest::blocking::get("https://docs.rs/soup")?;
     /// let soup = Soup::from_reader(response)?;
     /// #   Ok(())

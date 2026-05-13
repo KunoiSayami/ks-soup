@@ -90,7 +90,7 @@ pub trait NodeExt: Sized {
     /// # extern crate soup;
     /// # use std::error::Error;
     /// # use soup::prelude::*;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup = Soup::new(r#"<div class="foo bar"></div>"#);
     /// let div = soup.tag("div").find().expect("Couldn't find div");
     /// assert_eq!(div.get("class"), Some("foo bar".to_string()));
@@ -187,7 +187,7 @@ pub trait NodeExt: Sized {
     ///
     /// use soup::prelude::*;
     /// # use std::error::Error;
-    /// # fn main() -> Result<(), Box<Error>> {
+    /// # fn main() -> Result<(), Box<dyn Error>> {
     /// let soup = Soup::new(r#"<div id=""><b>FOO</b></div>"#);
     /// let b = soup.tag("b").find().expect("Couldn't find tag 'b'");
     /// let div = b.parent().expect("Couldn't get parent of tag 'b'");
