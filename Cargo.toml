@@ -1,6 +1,6 @@
 [package]
 name = "soup"
-version = "0.5.1"
+version = "0.6.0"
 authors = ["Paul Woolcock <paul@woolcock.us>"]
 license = "CC-PDDC"
 description = """
@@ -8,13 +8,15 @@ Inspired by the python library BeautifulSoup, this is a layer on top of html5eve
 """
 documentation = "https://docs.rs/soup"
 repository = "https://gitlab.com/pwoolcoc/soup.git"
+edition = "2021"
 
 [dependencies]
-html5ever = "0.22"
+html5ever = "0.29"
 regex = { version = "1.0.5", optional = true }
+markup5ever_rcdom = "0.5.0-unofficial"
 
 [dev-dependencies]
-reqwest = "0.9.4"
+reqwest = { version = "0.12.9", features = ["blocking"] }
 
 [features]
 default = ["regex"]

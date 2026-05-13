@@ -1,10 +1,10 @@
+use markup5ever_rcdom::Handle;
 use std::fmt;
-use html5ever::rcdom::Handle;
 
 use crate::{
-    Soup,
     find::{AttrQuery, QueryBuilder, QueryWrapper, TagQuery},
     pattern::Pattern,
+    Soup,
 };
 
 /// Adds the QueryBuilder constructor methods to the implementing type
@@ -31,9 +31,12 @@ pub trait QueryBuilderExt {
     }
 
     /// Starts building a Query, with attr name `name`
-    fn attr_name<'a, P>(&self, name: P) -> QueryBuilder<'a, AttrQuery<P, bool>, QueryWrapper<'a, (), ()>>
+    fn attr_name<'a, P>(
+        &self,
+        name: P,
+    ) -> QueryBuilder<'a, AttrQuery<P, bool>, QueryWrapper<'a, (), ()>>
     where
-        P: Pattern
+        P: Pattern,
     {
         let handle = self.get_handle();
         let qb = QueryBuilder::new(handle);
@@ -41,9 +44,12 @@ pub trait QueryBuilderExt {
     }
 
     /// Starts building a Query, with attr value `value`
-    fn attr_value<'a, P>(&self, value: P) -> QueryBuilder<'a, AttrQuery<bool, P>, QueryWrapper<'a, (), ()>>
+    fn attr_value<'a, P>(
+        &self,
+        value: P,
+    ) -> QueryBuilder<'a, AttrQuery<bool, P>, QueryWrapper<'a, (), ()>>
     where
-        P: Pattern
+        P: Pattern,
     {
         let handle = self.get_handle();
         let qb = QueryBuilder::new(handle);

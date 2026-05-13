@@ -297,19 +297,14 @@
     rust_2018_compatibility,
     rust_2018_idioms
 )]
-extern crate html5ever;
-#[cfg(feature = "regex")]
-extern crate regex;
 
-use html5ever::{
-    parse_document,
-    rcdom::RcDom,
-    tendril::TendrilSink,
-};
+use html5ever::{parse_document, tendril::TendrilSink};
+use markup5ever_rcdom::RcDom;
 use std::{
     fmt,
     io::{self, Read},
 };
+pub use {html5ever, markup5ever_rcdom};
 
 /// This module exports all the important types & traits to use `soup`
 /// effectively
@@ -321,9 +316,9 @@ pub use crate::{find::QueryBuilder, node_ext::NodeExt, qb_ext::QueryBuilderExt};
 
 mod attribute;
 mod find;
-mod qb_ext;
 mod node_ext;
 pub mod pattern;
+mod qb_ext;
 
 /// Parses HTML & provides methods to query & manipulate the document
 pub struct Soup {
@@ -362,9 +357,7 @@ impl Soup {
         let dom = parse_document(RcDom::default(), Default::default())
             .from_utf8()
             .one(html.as_bytes());
-        Soup {
-            handle: dom,
-        }
+        Soup { handle: dom }
     }
 
     /// Create a new `Soup` instance from something that implements `Read`
@@ -378,7 +371,7 @@ impl Soup {
     /// use soup::prelude::*;
     ///
     /// # fn main() -> Result<(), Box<Error>> {
-    /// let response = reqwest::get("https://docs.rs/soup")?;
+    /// let response = reqwest::blocking::get("https://docs.rs/soup")?;
     /// let soup = Soup::from_reader(response)?;
     /// #   Ok(())
     /// # }
@@ -387,9 +380,7 @@ impl Soup {
         let dom = parse_document(RcDom::default(), Default::default())
             .from_utf8()
             .read_from(&mut reader)?;
-        Ok(Soup {
-            handle: dom,
-        })
+        Ok(Soup { handle: dom })
     }
 
     /// Extracts all text from the HTML
@@ -400,9 +391,7 @@ impl Soup {
 
 impl From<RcDom> for Soup {
     fn from(rc: RcDom) -> Soup {
-        Soup {
-            handle: rc
-        }
+        Soup { handle: rc }
     }
 }
 

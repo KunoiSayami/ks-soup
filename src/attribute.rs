@@ -1,24 +1,27 @@
-use html5ever::rcdom::{Node, NodeData};
 use crate::pattern::Pattern;
+use markup5ever_rcdom::{Node, NodeData};
 
 fn is_multiple(tag_name: &str, attr_name: &str) -> bool {
-    match (tag_name.to_lowercase().as_str(), attr_name.to_lowercase().as_str()) {
-        (_, "class")                |
-        (_, "accesskey")            |
-        (_, "dropzone")             |
-        ("a", "rel")                |
-        ("a", "rev")                |
-        ("link", "rel")             |
-        ("link", "rev")             |
-        ("tr", "headers")           |
-        ("th", "headers")           |
-        ("form", "accept-charset")  |
-        ("object", "archive")       |
-        ("area", "rel")             |
-        ("icon", "sizes")           |
-        ("iframe", "sandbox")       |
-        ("output", "for")           => true,
-        _ => false
+    match (
+        tag_name.to_lowercase().as_str(),
+        attr_name.to_lowercase().as_str(),
+    ) {
+        (_, "class")
+        | (_, "accesskey")
+        | (_, "dropzone")
+        | ("a", "rel")
+        | ("a", "rev")
+        | ("link", "rel")
+        | ("link", "rev")
+        | ("tr", "headers")
+        | ("th", "headers")
+        | ("form", "accept-charset")
+        | ("object", "archive")
+        | ("area", "rel")
+        | ("icon", "sizes")
+        | ("iframe", "sandbox")
+        | ("output", "for") => true,
+        _ => false,
     }
 }
 
@@ -32,9 +35,17 @@ fn match_list_attr<V: Pattern>(needle: &V, haystack: &str) -> bool {
     false
 }
 
-pub(crate) fn list_aware_match<K: Pattern, V: Pattern>(node: &Node, attr_name: &K, attr_value: &V) -> bool {
+pub(crate) fn list_aware_match<K: Pattern, V: Pattern>(
+    node: &Node,
+    attr_name: &K,
+    attr_value: &V,
+) -> bool {
     match node.data {
-        NodeData::Element { ref name, ref attrs, ..} => {
+        NodeData::Element {
+            ref name,
+            ref attrs,
+            ..
+        } => {
             let attrs = attrs.borrow();
             for attr in attrs.iter() {
                 let k = attr.name.local.as_ref();

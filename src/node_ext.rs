@@ -1,7 +1,7 @@
-use html5ever::rcdom::{self, Handle, NodeData};
+use markup5ever_rcdom::{self as rcdom, Handle, NodeData};
 use std::collections::BTreeMap;
 
-/// Adds some convenience methods to the `html5ever::rcdom::Node` type
+/// Adds some convenience methods to the `markup5ever_rcdom::Node` type
 pub trait NodeExt: Sized {
     /// Retrieves the node that these methods will work on
     fn get_node(&self) -> &rcdom::Node;
@@ -73,24 +73,12 @@ pub trait NodeExt: Sized {
     fn name(&self) -> &str {
         let node = self.get_node();
         match node.data {
-            NodeData::Document {
-                ..
-            } => "[document]",
-            NodeData::Doctype {
-                ..
-            } => "[doctype]",
-            NodeData::Text {
-                ..
-            } => "[text]",
-            NodeData::Comment {
-                ..
-            } => "[comment]",
-            NodeData::ProcessingInstruction {
-                ..
-            } => "[processing-instruction]",
-            NodeData::Element {
-                ref name, ..
-            } => name.local.as_ref(),
+            NodeData::Document { .. } => "[document]",
+            NodeData::Doctype { .. } => "[doctype]",
+            NodeData::Text { .. } => "[text]",
+            NodeData::Comment { .. } => "[comment]",
+            NodeData::ProcessingInstruction { .. } => "[processing-instruction]",
+            NodeData::Element { ref name, .. } => name.local.as_ref(),
         }
     }
 
@@ -112,9 +100,7 @@ pub trait NodeExt: Sized {
     fn get(&self, attr: &str) -> Option<String> {
         let node = self.get_node();
         match node.data {
-            NodeData::Element {
-                ref attrs, ..
-            } => {
+            NodeData::Element { ref attrs, .. } => {
                 let attrs = attrs.borrow();
                 for it in attrs.iter() {
                     let name = it.name.local.as_ref();
@@ -132,9 +118,7 @@ pub trait NodeExt: Sized {
     fn attrs(&self) -> BTreeMap<String, String> {
         let node = self.get_node();
         match node.data {
-            NodeData::Element {
-                ref attrs, ..
-            } => {
+            NodeData::Element { ref attrs, .. } => {
                 let attrs = attrs.borrow();
                 attrs
                     .iter()
@@ -188,12 +172,8 @@ pub trait NodeExt: Sized {
                     )
                 }
             },
-            NodeData::Text {
-                ref contents, ..
-            } => contents.borrow().as_ref().to_string(),
-            NodeData::Comment {
-                ref contents, ..
-            } => format!("<!--{}-->", contents.as_ref()),
+            NodeData::Text { ref contents, .. } => contents.borrow().as_ref().to_string(),
+            NodeData::Comment { ref contents, .. } => format!("<!--{}-->", contents.as_ref()),
             _ => "".to_string(),
         }
     }
@@ -226,9 +206,7 @@ pub trait NodeExt: Sized {
 
 fn extract_text(node: &rcdom::Node, result: &mut Vec<String>) {
     match node.data {
-        NodeData::Text {
-            ref contents, ..
-        } => result.push(contents.borrow().to_string()),
+        NodeData::Text { ref contents, .. } => result.push(contents.borrow().to_string()),
         _ => (),
     }
     let children = node.children.borrow();

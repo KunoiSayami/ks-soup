@@ -1,8 +1,8 @@
-use html5ever::rcdom::{self, Handle, NodeData};
+use markup5ever_rcdom::{self as rcdom, Handle, NodeData};
 use std::{fmt, marker::PhantomData, rc::Rc};
 
-use crate::pattern::Pattern;
 use crate::attribute;
+use crate::pattern::Pattern;
 
 pub trait Query {
     fn matches(&self, node: &rcdom::Node) -> bool;
@@ -14,9 +14,7 @@ pub struct TagQuery<P> {
 
 impl<P: Pattern> TagQuery<P> {
     fn new(inner: P) -> TagQuery<P> {
-        TagQuery {
-            inner,
-        }
+        TagQuery { inner }
     }
 }
 
@@ -34,9 +32,7 @@ where
 impl<P: Pattern> Query for TagQuery<P> {
     fn matches(&self, node: &rcdom::Node) -> bool {
         match node.data {
-            NodeData::Element {
-                ref name, ..
-            } => self.inner.matches(name.local.as_ref()),
+            NodeData::Element { ref name, .. } => self.inner.matches(name.local.as_ref()),
             _ => false,
         }
     }
@@ -53,10 +49,7 @@ where
     V: Pattern,
 {
     fn new(key: K, value: V) -> AttrQuery<K, V> {
-        AttrQuery {
-            key,
-            value,
-        }
+        AttrQuery { key, value }
     }
 }
 
@@ -271,9 +264,12 @@ where
     /// #   Ok(())
     /// # }
     /// ```
-    pub fn attr_name<P>(self, name: P) -> QueryBuilder<'a, AttrQuery<P, bool>, QueryWrapper<'a, T, U>>
+    pub fn attr_name<P>(
+        self,
+        name: P,
+    ) -> QueryBuilder<'a, AttrQuery<P, bool>, QueryWrapper<'a, T, U>>
     where
-        P: Pattern
+        P: Pattern,
     {
         self.push_query(AttrQuery::new(name, true))
     }
@@ -293,9 +289,12 @@ where
     /// #   Ok(())
     /// # }
     /// ```
-    pub fn attr_value<P>(self, value: P) -> QueryBuilder<'a, AttrQuery<bool, P>, QueryWrapper<'a, T, U>>
+    pub fn attr_value<P>(
+        self,
+        value: P,
+    ) -> QueryBuilder<'a, AttrQuery<bool, P>, QueryWrapper<'a, T, U>>
     where
-        P: Pattern
+        P: Pattern,
     {
         self.push_query(AttrQuery::new(true, value))
     }
@@ -456,11 +455,7 @@ impl<'a, T: Query + 'a, U: Query + 'a> IntoIterator for QueryBuilder<'a, T, U> {
 
     fn into_iter(self) -> Self::IntoIter {
         let queries = Rc::new(self.queries);
-        let recurse_levels = if self.recursive {
-            None
-        } else {
-            Some(1u8)
-        };
+        let recurse_levels = if self.recursive { None } else { Some(1u8) };
         let iter = build_iter(self.handle, queries, recurse_levels);
         let iter: BoxNodeIter<'_> = Box::new(iter.flat_map(|node| node));
         if let Some(limit) = self.limit {
